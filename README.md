@@ -9,10 +9,11 @@ macOS 和 Windows 共用同一套 PySide6/Qt 界面源码。
 ## 下载
 
 已打包版本从 [GitHub Releases](https://github.com/ipsc-gummy/CUMCM-2026-B-Simulator/releases)
-下载。根据 Release 页面已提供的附件选择 macOS 或 Windows 版本。
+下载。根据 Release 页面中实际提供的附件选择对应平台。
 
 - macOS：打开 `.dmg`，将 App 拖入“应用程序”。v30 未做 Apple notarization。
-- Windows：解压完整目录后运行 `Q3Q4_Simulator.exe`，不要只单独移动 EXE。
+- Windows：等待 Windows 10/11 实机完成构建与验收后再加入 Release；不会用 Mac
+  产物冒充 Windows 版本。
 
 下载地址也会在客户端“公告”页中显示；客户端不做强制自动更新。
 
@@ -25,6 +26,14 @@ macOS 和 Windows 共用同一套 PySide6/Qt 界面源码。
 - 上传策略 ZIP，服务器隔离评测后自动上榜
 - `VERIFIED` / `OPEN SOURCE VERIFIED` 状态和公开源码查看
 - 排行榜断网或服务异常时，本地模拟器仍可独立使用
+
+## 界面
+
+![本地模拟器](docs/images/simulator-main.png)
+
+![Q3 排行榜](docs/images/leaderboard-q3.png)
+
+![公开源码查看器](docs/images/open-source-viewer.png)
 
 ## 提交策略
 

@@ -1,5 +1,8 @@
 # v30
 
+首批 Release 提供 Apple Silicon macOS 版本；Windows 版本将在 Windows 10/11
+实机完成构建和验收后补充。
+
 - 在 Simulator 左侧导航中集成 Q3/Q4 排行榜。
 - 加入注册、登录、个人参赛名、我的成绩和提交历史。
 - 支持直接上传策略 ZIP，提交时选择公开源码或仅提交成绩。
