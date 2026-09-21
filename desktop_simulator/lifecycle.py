@@ -109,6 +109,17 @@ class Session:
         self.row.update(reason=reason, ended_ms=int(self.wall()*1000))
         self.row['window_remaining'] = max(0, math.ceil(self.window_end-self.clock())) if self.window_end else 0
         self.row['program_remaining'] = max(0, math.ceil(min(self.window_end, self.program_end)-self.clock())) if self.program_end else None
+        # Persist only public, aggregate score fields.  The values come from
+        # the frozen core so the local result card uses the same definition as
+        # the leaderboard evaluator without exposing a formal scene's truth.
+        if self.env is not None:
+            metrics = self.env.metrics()
+            self.row['result_metrics'] = {
+                'target_count': metrics['target_count'],
+                'cleared_count': metrics['cleared_count'],
+                'clear_rate': metrics['clearance_fraction'],
+                'mean_clear_time_s': metrics['mean_time_per_cleared_s'],
+            }
         if self.row['mode'] == 'practice' and self.scene is not None:
             n = self.scene['N']
             d = sum(s.get('direction_deg') is not None for s in self.scene['sources'])

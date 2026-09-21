@@ -1,6 +1,7 @@
 """HTTPS-only Leaderboard client isolated from the local simulator runtime."""
 from concurrent.futures import ThreadPoolExecutor
 from http.cookiejar import CookieJar
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode, urljoin, urlsplit
 from urllib.request import HTTPRedirectHandler, HTTPCookieProcessor, Request, build_opener
@@ -45,21 +46,24 @@ class LeaderboardAPI:
         self.csrf_token = ''
         self.user = None
 
-    def _request(self, path, method='GET', payload=None, text=False):
+    def _request(self, path, method='GET', payload=None, text=False, raw_body=None, content_type=None, timeout=None):
         if not path.startswith('/'):
             raise ValueError('API path must start with /')
         url = urljoin(self.base_url + '/', path.lstrip('/'))
-        headers = {'Accept': 'application/json', 'User-Agent': 'Q3Q4-Simulator/1.1'}
+        headers = {'Accept': 'application/json', 'User-Agent': 'Q3Q4-Simulator/30.0'}
         body = None
+        if payload is not None and raw_body is not None: raise ValueError('payload and raw_body are mutually exclusive')
         if payload is not None:
             body = json.dumps(payload, ensure_ascii=False, separators=(',', ':')).encode('utf-8')
             headers['Content-Type'] = 'application/json'
+        elif raw_body is not None:
+            body=raw_body;headers['Content-Type']=content_type
         if method != 'GET':
             headers['Origin'] = self.base_url
             headers['X-CSRF-Token'] = self.csrf_token
         try:
             with self.lock:
-                with self.opener.open(Request(url, data=body, headers=headers, method=method), timeout=self.timeout) as response:
+                with self.opener.open(Request(url, data=body, headers=headers, method=method), timeout=timeout or self.timeout) as response:
                     if hasattr(response,'geturl') and urlsplit(response.geturl()).scheme != 'https':
                         raise LeaderboardError('排行榜响应不是 HTTPS。')
                     raw = response.read()
@@ -128,12 +132,39 @@ class LeaderboardAPI:
     def dashboard(self):
         return {'teams': self._request('/api/teams'), 'submissions': self._request('/api/me/submissions')}
 
+    def create_personal_team(self, username):
+        return self._request('/api/teams', 'POST', {'team_name': username})
+
+    def submit_strategy(self, team_id, task, source_path, entrypoint, dependencies='', readme='', description='', open_source=False, consent=False):
+        source=Path(source_path)
+        if source.suffix.lower()!='.zip' or not source.is_file():raise LeaderboardError('请选择有效的 source.zip。')
+        content=source.read_bytes()
+        if len(content)>10*1024*1024:raise LeaderboardError('上传文件超过大小限制。','upload_too_large',413)
+        sid=self._request('/api/submissions','POST',{'team_id':team_id,'task':task})['id']
+        boundary='----Q3Q4'+uuid.uuid4().hex
+        chunks=[]
+        def field(name,value):
+            chunks.extend([f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"\r\n\r\n'.encode(),str(value).encode('utf-8'),b'\r\n'])
+        fields={'readme':readme,'entrypoint':entrypoint,'dependencies':dependencies,'description':description,
+                'open_source':str(bool(open_source)).lower(),'consent':str(bool(consent)).lower()}
+        for name,value in fields.items():field(name,value)
+        chunks.extend([f'--{boundary}\r\nContent-Disposition: form-data; name="source"; filename="source.zip"\r\nContent-Type: application/zip\r\n\r\n'.encode(),content,b'\r\n',f'--{boundary}--\r\n'.encode()])
+        result=self._request(f'/api/submissions/{sid}/source','POST',raw_body=b''.join(chunks),content_type='multipart/form-data; boundary='+boundary,timeout=60)
+        return {'id':sid,**result}
+
     def code(self, submission_id):
         return self._request(f'/api/submissions/{quote(submission_id, safe="")}/code')
 
     def code_file(self, submission_id, path):
         query = urlencode({'path': path})
         return self._request(f'/api/submissions/{quote(submission_id, safe="")}/code/file?{query}', text=True)
+
+    def owner_code(self, submission_id):
+        return self._request(f'/api/submissions/{quote(submission_id, safe="")}/source')
+
+    def owner_code_file(self, submission_id, path):
+        query=urlencode({'path':path})
+        return self._request(f'/api/submissions/{quote(submission_id, safe="")}/source/file?{query}',text=True)
 
 
 class _ResultBus(QObject):

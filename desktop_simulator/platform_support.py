@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 
 
-APP_VERSION = '1.1-dev'
+APP_VERSION = '30.0'
 
 
 def default_data_dir(platform_name=None, environ=None, home=None):

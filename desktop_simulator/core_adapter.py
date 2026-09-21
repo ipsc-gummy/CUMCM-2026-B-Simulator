@@ -2,7 +2,7 @@
 
 The public repository intentionally does not contain scene generation,
 physics, ErrorField, replay data, or hidden evaluation material.
-Official desktop builds replace this module with the private runtime adapter.
+Packaged desktop builds replace this module with the private runtime adapter.
 """
 
 

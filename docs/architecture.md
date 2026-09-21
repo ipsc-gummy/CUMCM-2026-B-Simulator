@@ -14,7 +14,7 @@
      非公开 simulator runtime
 
 桌面客户端
-    │  HTTPS
+    │  HTTPS（公开榜 / 账号 / 提交 ZIP / 源码查看）
     ▼
 公开 Leaderboard API
 ```
@@ -24,3 +24,6 @@
 
 macOS 与 Windows 共用 `desktop_simulator/` 中的 GUI 和网络代码。平台差异仅限可写数据目录、
 系统字体 fallback、窗口行为和构建配置。
+
+桌面客户端不计算或伪造排行榜成绩。用户上传的 ZIP 由服务器隔离 evaluator
+执行，权威指标返回后才显示为认证成绩。本公开仓库不包含服务器 backend 或 evaluator。

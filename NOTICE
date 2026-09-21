@@ -1,0 +1,9 @@
+CUMCM 2026 B Simulator v30
+Copyright 2026 ipsc-gummy
+
+This is a community-developed tool and is not affiliated with or endorsed by
+the competition organizer.
+
+The desktop client uses PySide6 / Qt for Python. PySide6 and Qt retain their
+respective upstream licenses; see THIRD_PARTY_NOTICES.md and the license files
+shipped with a binary distribution.

@@ -21,6 +21,7 @@
 - 部署凭据和服务器私有配置
 
 `desktop_simulator/core_adapter.py` 是公开源码与私有 runtime 的边界。公开版本只提供明确的不可用
-提示，不包含替代 generator、简化 physics 或伪造数据。正式构建由私有流水线注入真实 adapter。
+提示，不包含替代 generator、简化 physics 或伪造数据。发布版由私有构建流程注入冻结 runtime。
+私有 runtime 即使随二进制包分发，也不因此纳入本公开仓库的 Apache-2.0 授权范围。
 
 任何贡献都不得提交通过逆向、泄漏或其他未经授权方式获得的私有 core、场景或生成参数。
