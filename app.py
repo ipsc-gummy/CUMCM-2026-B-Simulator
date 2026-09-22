@@ -16,7 +16,7 @@ def main():
     parser.add_argument('--smoke-test', action='store_true', help='Run packaged GUI/HTTP acceptance in the specified data directory')
     args = parser.parse_args()
     app = QApplication(sys.argv[:1])
-    app.setApplicationName('Q3Q4_Simulator')
+    app.setApplicationName('数模模拟器')
     app.setOrganizationName('LocalSimulator')
     args.data_dir.mkdir(parents=True, exist_ok=True)
     lock = QLockFile(str(args.data_dir/'application.lock'))

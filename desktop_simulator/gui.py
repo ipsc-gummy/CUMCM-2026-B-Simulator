@@ -256,7 +256,7 @@ class Nav(QWidget):
 class TitleBar(QWidget):
     def __init__(self,window):
         super().__init__();self.setObjectName('titlebar');self.setFixedHeight(22);self.window_=window
-        h=QHBoxLayout(self);h.setContentsMargins(5,0,0,0);h.setSpacing(3);h.addWidget(image_label(12));h.addWidget(label('无线电干扰源环境模拟器'));h.addStretch()
+        h=QHBoxLayout(self);h.setContentsMargins(5,0,0,0);h.setSpacing(3);h.addWidget(image_label(12));h.addWidget(label('数模模拟器'));h.addStretch()
         for text,fn in [('—',window.showMinimized),('□',self.maximize),('×',window.close)]:
             b=button(text,fn,'title',36);b.setFixedHeight(22)
             if text=='×':b.setObjectName('close');b.setStyleSheet('font-size:18px;')
@@ -506,20 +506,20 @@ class Window(QMainWindow):
         super().__init__();self.store=store;self.session=Session(store);self.service=None;self.server_error=''
         self.remote=leaderboard or LeaderboardGateway(parent=self);self.leaderboard_task='q3';self.leaderboard_rows=[];self.leaderboard_cache={};self.leaderboard_bootstrapped=False;self.leaderboard_user=None;self.leaderboard_teams=[];self.leaderboard_submissions=[];self.source_viewer=None;self.source_viewer_owner=False;self.leaderboard_auth_dialog=None;self.strategy_upload_dialog=None;self.leaderboard_error_kind=None
         self.personal_identity_pending=False
-        self.release_config={'current_version':APP_VERSION,'latest_version':APP_VERSION,'release_notes':'v30 首个公开版本。','mac_download_url':'','windows_download_url':'','announcement':'Q3Q4 Simulator v30 已发布。','feedback_url':''}
+        self.release_config={'current_version':APP_VERSION,'latest_version':APP_VERSION,'release_notes':'v30 首个公开版本。','mac_download_url':'','windows_download_url':'','announcement':'数模模拟器 v30 已发布。','feedback_url':''}
         self.current_task='q3';self.current_mode='practice';self.detail=False;self.modal=None;self.shown_completion=None;self.last_key=None;self.history_key=None
-        self.setWindowFlags(Qt.Window|Qt.FramelessWindowHint);self.setWindowTitle('Q3Q4 本地模拟器');self.resize(1000,626);self.setMinimumSize(1000,626)
+        self.setWindowFlags(Qt.Window|Qt.FramelessWindowHint);self.setWindowTitle('数模模拟器');self.resize(1000,626);self.setMinimumSize(1000,626)
         QApplication.instance().setStyle('Fusion');self.setStyleSheet(STYLE.replace('__FONT_STACK__',qt_font_stack()))
         root=QWidget();self.setCentralWidget(root);v=QVBoxLayout(root);v.setContentsMargins(0,0,0,0);v.setSpacing(0);v.addWidget(TitleBar(self))
         self.body=QWidget();self.body.setObjectName('body');v.addWidget(self.body,1);h=QHBoxLayout(self.body);h.setContentsMargins(0,0,0,0);h.setSpacing(0)
         sidebar=QWidget();sidebar.setObjectName('sidebar');sidebar.setFixedWidth(160);side=QVBoxLayout(sidebar);side.setContentsMargins(0,0,0,0);side.setSpacing(0)
-        brand=QWidget();brand.setFixedHeight(50);bh=QHBoxLayout(brand);bh.setContentsMargins(14,0,10,0);bh.setSpacing(8);bh.addWidget(image_label(28));bh.addWidget(label('环境模拟器','brand'));bh.addStretch();side.addWidget(brand)
+        brand=QWidget();brand.setFixedHeight(50);bh=QHBoxLayout(brand);bh.setContentsMargins(14,0,10,0);bh.setSpacing(8);bh.addWidget(image_label(28));bh.addWidget(label('数模模拟器','brand'));bh.addStretch();side.addWidget(brand)
         line=QFrame();line.setObjectName('separator');line.setFixedHeight(1);side.addWidget(line)
         self.nav=Nav(self.navigate);side.addWidget(self.nav,1)
         self.version_label=label('v'+display_version(APP_VERSION)+'  ·  本地复刻','version');self.version_label.setContentsMargins(16,0,0,0);self.version_label.setFixedHeight(32);self.version_label.setStyleSheet('border-top:1px solid #3a484a;');side.addWidget(self.version_label);h.addWidget(sidebar)
         right=QWidget();rv=QVBoxLayout(right);rv.setContentsMargins(0,0,0,0);rv.setSpacing(0);h.addWidget(right,1)
         header=QWidget();header.setObjectName('header');header.setFixedHeight(50);hh=QHBoxLayout(header);hh.setContentsMargins(20,8,20,8)
-        titles=QVBoxLayout();titles.setSpacing(1);titles.addWidget(label('无线电干扰源环境模拟器','headerTitle'));titles.addWidget(label('本地仿真独立运行 · 排行榜通过 HTTPS 连接','localNote'));hh.addLayout(titles);hh.addStretch()
+        titles=QVBoxLayout();titles.setSpacing(1);titles.addWidget(label('数模模拟器','headerTitle'));titles.addWidget(label('Q3/Q4 无线电干扰源本地仿真 · 排行榜通过 HTTPS 连接','localNote'));hh.addLayout(titles);hh.addStretch()
         wifi=label();wifi.setPixmap(icon('wifi','#267445',14).pixmap(14,14));hh.addWidget(wifi);local=label('本地运行');local.setStyleSheet('color:#267445');hh.addWidget(local)
         self.account_badge=label();self.account_badge.setStyleSheet('color:#4e5b60; border-left:1px solid #d4d9d7; padding-left:10px; margin-left:6px;');hh.addWidget(self.account_badge)
         hh.addWidget(button('',self.close,'icon',24,'exit'));rv.addWidget(header)
@@ -808,8 +808,8 @@ class Window(QMainWindow):
             card,cv=box('panel',(16,12,16,12));cv.addWidget(label(title,'sectionTitle'));cv.addSpacing(5);body=label(text,'muted');body.setWordWrap(True);cv.addWidget(body);v.addWidget(card);v.addSpacing(9)
         v.addStretch()
     def _about(self):
-        p,v=self.page();v.addWidget(label('环境模拟器','eyebrow'));v.addWidget(label('关于','heading'));v.addSpacing(17)
-        panel,h=box('panel',(16,16,16,16),True);h.addWidget(image_label(48));h.addSpacing(12);bv=QVBoxLayout();bv.setSpacing(3);bv.addWidget(label('无线电干扰源环境模拟器','sectionTitle'));self.about_version=label('','muted');bv.addWidget(self.about_version);bv.addWidget(label('核心 Q3_Q4_LOCAL_SIMULATOR_V1','muted'));h.addLayout(bv);h.addStretch();v.addWidget(panel);v.addStretch()
+        p,v=self.page();v.addWidget(label('数模模拟器','eyebrow'));v.addWidget(label('关于','heading'));v.addSpacing(17)
+        panel,h=box('panel',(16,16,16,16),True);h.addWidget(image_label(48));h.addSpacing(12);bv=QVBoxLayout();bv.setSpacing(3);bv.addWidget(label('数模模拟器','sectionTitle'));self.about_version=label('','muted');bv.addWidget(self.about_version);bv.addWidget(label('核心 Q3_Q4_LOCAL_SIMULATOR_V1','muted'));h.addLayout(bv);h.addStretch();v.addWidget(panel);v.addStretch()
     def navigate(self,index):
         if not hasattr(self,'pages'):return
         self.detail=False

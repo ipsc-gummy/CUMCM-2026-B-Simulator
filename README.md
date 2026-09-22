@@ -1,6 +1,6 @@
 # CUMCM 2026 数模 B 题模拟器 v30
 
-Q3/Q4 Simulator 是面向机器狗策略开发的桌面工具：本地测试使用
+数模模拟器是面向机器狗策略开发的桌面工具：本地测试使用
 `127.0.0.1:2026` HTTP 接口，排行榜与策略提交通过 HTTPS 连接。
 macOS 和 Windows 共用同一套 PySide6/Qt 界面源码。
 
@@ -11,7 +11,9 @@ macOS 和 Windows 共用同一套 PySide6/Qt 界面源码。
 已打包版本从 [GitHub Releases](https://github.com/ipsc-gummy/CUMCM-2026-B-Simulator/releases)
 下载。根据 Release 页面中实际提供的附件选择对应平台。
 
-**普通用户只下载 `Q3Q4_Simulator.dmg`。GitHub 自动生成的 `Source code` 压缩包不是可运行软件。**
+**普通用户只下载 `数模模拟器.dmg`。GitHub 自动生成的 `Source code` 压缩包不是可运行软件。**
+该源码包只含 GUI、排行榜客户端和公开接口，不含场景生成、physics、ErrorField、
+隐藏数据、replay 或服务器 evaluator。
 
 - macOS：打开 `.dmg`，将 App 拖入“应用程序”。v30 未做 Apple notarization。
 - Windows：等待 Windows 10/11 实机完成构建与验收后再加入 Release；不会用 Mac
