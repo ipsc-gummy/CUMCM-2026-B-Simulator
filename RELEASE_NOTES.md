@@ -3,7 +3,7 @@
 首批 Release 提供 Apple Silicon macOS 版本；Windows 版本将在 Windows 10/11
 实机完成构建和验收后补充。
 
-普通用户只需下载 `数模模拟器.dmg`；GitHub 自动生成的源码压缩包不是可运行软件。
+普通用户只需下载 `ShuMo_Simulator_macOS.dmg`（数模模拟器 macOS 版）；GitHub 自动生成的源码压缩包不是可运行软件。
 源码压缩包不包含 simulator core、场景生成数据或服务器评测代码。
 
 - 在 Simulator 左侧导航中集成 Q3/Q4 排行榜。
