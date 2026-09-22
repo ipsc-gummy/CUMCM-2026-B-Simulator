@@ -9,14 +9,14 @@ macOS 和 Windows 共用同一套 PySide6/Qt 界面源码。
 ## 下载
 
 已打包版本从 [GitHub Releases](https://github.com/ipsc-gummy/CUMCM-2026-B-Simulator/releases/tag/v30)
-下载。根据系统选择 `ShuMo_Simulator_macOS.dmg` 或 `数模模拟器_Windows.zip`。
+下载。根据系统选择 `ShuMo_Simulator_macOS.dmg` 或 `ShuMo_Simulator_Windows_x64.zip`。
 
 **普通用户只下载对应平台的 DMG/Windows ZIP。GitHub 自动生成的 `Source code` 压缩包不是可运行软件。**
 该源码包只含 GUI、排行榜客户端和公开接口，不含场景生成、physics、ErrorField、
 隐藏数据、replay 或服务器 evaluator。
 
 - macOS：打开 `.dmg`，将 App 拖入“应用程序”。v30 未做 Apple notarization。
-- Windows 10/11 x64：解压 `数模模拟器_Windows.zip`，进入“数模模拟器”文件夹后双击
+- Windows 10/11 x64：解压 `ShuMo_Simulator_Windows_x64.zip`，进入“数模模拟器”文件夹后双击
   `数模模拟器.exe`；不要将 EXE 单独移出 `_internal` 所在目录。
 
 下载地址也会在客户端“公告”页中显示；客户端不做强制自动更新。
